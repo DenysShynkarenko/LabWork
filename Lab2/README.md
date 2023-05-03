@@ -54,14 +54,14 @@
 
 Для цього використовуємо команду:
 
-```gcloud compute images list```
+gcloud compute images list
 
 ![](centos.png)
 
 Ми побачимо кілька зображень ОС, виберемо ubuntu
 Тепер виконаємо наступну команду
 
-```gcloud compute instances create cod-instance --image-family=ubuntu-pro-2004-lts --image-project=ubuntu-os-pro-cloud --machine-type=e2-micro
+gcloud compute instances create cod-instance --image-family=ubuntu-pro-2004-lts --image-project=ubuntu-os-pro-cloud --machine-type=e2-micro
 
 У консолі з'явився запит у якому ми можемо звернутися регіон. За замовчуванням виставлено europe-west1-з, але нам потрібно зверни теж самий регіон який ми знайшли у попередньому завданні, а саме us-west4-b. Тому на запит консолі відповідаємо n
 
