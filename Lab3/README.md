@@ -67,7 +67,7 @@ choco install terraform
 
 Відкриваємо створений нами файл і запишемо наступний код
 
-terraform {
+```terraform {
 required_providers {
 google = {
 source = "hashicorp/google"
@@ -75,7 +75,7 @@ version = "4.51.0"
 }
 }
 }
-
+```
 Тут ми вказуємо terraform, що він повинен працювати в GCP, а далі з сайту hashicorp знаходимо потрібний нам конфіг і вказуємо його в source і вказуємо версію.
 
 provider "google" {
@@ -111,7 +111,7 @@ region = var.subnet-region
 resource "google_compute_instance" "vm_instance" {
 name = "instance1"
 machine_type = "e2-micro"
-tags = ["Test"]
+tags = ["edu", "micro", "linux", "devops", "ukraine"]
 
 boot_disk {
 initialize_params {
@@ -121,7 +121,7 @@ image = "debian-cloud/debian-11"
 
 network_interface {
 network = google_compute_network.vpc_network.name
-subnetwork = google_compute_subnetwork.fishing_subnetwork.name
+subnetwork = google_compute_subnetwork.LABA3_subnetwork.name
 access_config {
 }
 }
