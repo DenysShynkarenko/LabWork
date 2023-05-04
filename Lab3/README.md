@@ -66,8 +66,8 @@ choco install terraform
 Тепер після створення аккаунта нам потрібно створити для Terraform папку в якій будуть зберігається дані туди ж ми і перенесемо наш ключ і створимо файл main.tf
 
 Відкриваємо створений нами файл і запишемо наступний код
-
-```terraform {
+```
+terraform {
 required_providers {
 google = {
 source = "hashicorp/google"
@@ -77,37 +77,37 @@ version = "4.51.0"
 }
 ```
 Тут ми вказуємо terraform, що він повинен працювати в GCP, а далі з сайту hashicorp знаходимо потрібний нам конфіг і вказуємо його в source і вказуємо версію.
-
+```
 provider "google" {
 credentials = file(var.credentials_file)
 project = var.project
 region = var.region
 zone = var.zone
 }
-
+```
 Тут ми вказуємо дані необхідні для роботи, ключ, наш проект, регіон та зону. Їх буде записано у файл variables.tf
-
+```
 resource "google_compute_network" "vpc_network" {
 name = "test-network"
 auto_create_subnetworks = false
 }
-
+```
 Тут ми створюємо в проекті test-network і за допомогою auto_create_subnetworks = false вимикаємо автоматичне створення subnetworks
 
 Далі створимо subnetwork
-
+```
 resource "google_compute_subnetwork" "LABA3_subnetwork"{
 name = "test-subnetwork"
 network = google_compute_network.vpc_network.name
 ip_cidr_range = "10.0.0.0/16"
 region = var.subnet-region
 }
-
+```
 
 Ім'я обрано "test-subnetwork", регіон буде зазначено у файлі "variables.tf". Мережею обираємо раніше створену та вказуємо IP-адресою "10.0.0.0" з маскою підмережі в 16 біт.
 
 Перейдемо до створення віртуальної машини. По-перше задамо ім'я instance1 та конфігурацію машини e2-micro.
-
+```
 resource "google_compute_instance" "vm_instance" {
 name = "instance1"
 machine_type = "e2-micro"
@@ -126,13 +126,13 @@ access_config {
 }
 }
 }
-
+```
 У розділі boot_disk оберемо бажаний образ операційної системи (Debian 11). Під network_interface задаємо мережу та сабнетворк, створені раніше.
 
 Перейдемо до файлу "variables.tf"
 
 Запишемо наші дані в цей файл
-
+```
 variable "project" {
 default = "laba3-385716"
 }
@@ -152,29 +152,29 @@ default = "us-central1-c"
 variable "subnet-region" {
 default = "us-central1"
 }
-
+```
 Тепер запишемо в файл outputs.tf наступну команду
-
+```
 output "ip" {
 value = google_compute_instance.vm_instance.network_interface.0.network_ip
 }
-
+```
 Цей код відасть нам IP-адресою машини при виконані terraform apply.
 
 Перейдемо до виконання роботи
 
 Зайшовши в термінал від іменни адміністратора пишемо команду cd і назва нашої папки в якій лежать наші файли, а після пишемо команду
-
+```
 terraform init
-
+```
 і натискаємо Enter
 
 ![](init.png)
 
 далі пишемо
-
+```
 terraform apply
-
+```
 ![](YES.png)
 
 Ми бачимо план, що зробить terraform і нам потрібно підтвердити його дії
